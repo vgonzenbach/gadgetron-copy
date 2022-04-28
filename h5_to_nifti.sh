@@ -1,7 +1,7 @@
 #!/bin/bash
 
-set -euf -o pipefail
-cd /project/mscamras/gadgetron
+#set -euf -o pipefail
+cd /Users/vgonzenb/PennSIVE/mscamras
 
 for h5 in $(find $(pwd) -name "*.h5" -type f | grep -v .git); do
     #h5=$(dirname $dat)/$(basename $dat .dat).h5
@@ -22,9 +22,9 @@ for h5 in $(find $(pwd) -name "*.h5" -type f | grep -v .git); do
             suffix=""
         fi
         just_modality=$(basename $(basename $(echo $modality | cut -d"_" -f2,3,4) .h5) .dat)
-        reference_nifti=/project/mscamras/Data/$(echo $dir | grep -Eo [0-9]+-[0-9]+)/$(echo $dir | grep -Eo [0-9]+-[0-9]+-[A-Za-z]+/ | grep -Eo [A-Za-z]+/)NIFTI/${just_modality}_ND${suffix}.nii.gz
+        reference_nifti=data/Data/$(echo $dir | grep -Eo [0-9]+-[0-9]+)/$(echo $dir | grep -Eo [0-9]+-[0-9]+-[A-Za-z]+/ | grep -Eo [A-Za-z]+/)NIFTI/${just_modality}_ND${suffix}.nii.gz
         #bsub -J h5nifti_"$i" -o ../logs/h5_to_nifti.log -e ../logs/h5_to_nifti.log 
         # singularity exec -B /project --cleanenv ~/simg/neuropythy_latest.sif
-        python code/try.py $h5 $reference_nifti $out_nifti 
+        /opt/miniconda3/envs/fmri/bin/python3 gadgetron-code/h5_to_nifti.py $h5 $reference_nifti $out_nifti
     fi
 done
