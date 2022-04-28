@@ -16,9 +16,9 @@ for key in f.keys():
                 # dest = np.array([])
                 # v.read_direct(dest)
                 # print(dest)
-                print(np.shape(v.value))
-                reshaped = v.value[0, 0, :, :]
-                print(np.shape(reshaped))
+                #print(np.shape(v.value))
+                reshaped = v[0, 0, :, :]
+                #print(np.shape(reshaped))
                 reordered = np.transpose(reshaped, axes=(0,1,2))
                 flipped = np.flip(reordered, axis=2)
                 out = nib.Nifti1Image(flipped, affine=reference_img.affine, header=reference_img.header.copy())
